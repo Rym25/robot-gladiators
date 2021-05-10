@@ -1,20 +1,7 @@
 var fight = function (enemy) {
     while (playerInfo.health > 0 && enemy.health > 0) {
-        // Asks player whether they want to fight
-        var promptFight = window.prompt("Would you like to FIGHT of SKIP this battle?");
-
-        // if player picks "skip" confirm and then stop the loop
-        if (promptFight === "skip" || promptFight === "SKIP") {
-            var confirmSkip = window.confirm("Are you sure you would like to skip?");
-
-            if (confirmSkip) {
-                window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
-                // Subtract money from playerInfo.money for skipping
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerInfo.money", playerInfo.money);
-                break;
-            }
-
+        if(fightOrSkip()) {
+            break;
         }
         // Generate random damage value based on player's attack power.
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
@@ -136,7 +123,30 @@ var getPlayerName = function () {
     while (name === "" || name === "null") {
         name = window.prompt ("What is your robot's name?");
     }
-}
+    return name;
+};
+
+var fightOrSkip = function () {
+    // Asks player whether they want to fight
+    var promptFight = window.prompt("Would you like to FIGHT of SKIP this battle?");
+        promptFight = promptFight.toLowerCase();
+    if(promptFight === "" || promptFight === "null") {
+        return fightOrSkip();
+    }
+    // if player picks "skip" confirm and then stop the loop
+    if (promptFight === "skip") {
+        var confirmSkip = window.confirm("Are you sure you would like to skip?");
+
+        if (confirmSkip) {
+            window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
+            // Subtract money from playerInfo.money for skipping
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            console.log("playerInfo.money", playerInfo.money);
+            return true;
+        }
+        return false;
+    }
+};
 // -----------------------------------------------
 // Initialize Player Bot as an object
 var playerInfo = {
