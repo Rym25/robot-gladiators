@@ -80,6 +80,17 @@ var endGame = function() {
     else {
         window.alert("You've lost your robot in battle.")
     }
+    var highScore = localStorage.getItem ("highscore");
+    if (highScore === "" || highScore === "null") {
+        highScore = 0;
+    }
+    if (highScore < playerInfo.money) {
+        window.alert("Congratulations " + playerInfo.name + " beat the previous high score of " + highScore);
+        localStorage.setItem ("highscore", playerInfo.money);
+        localStorage.setItem ("champion", playerInfo.name);
+    } else {
+        window.alert("Sorry you failed to beat the high score of " + highScore + " set by " + champion);
+    }
     // ask player if they would like to play again
     var playAgainConfirm = window.confirm("would you like to play again?");
 
@@ -166,17 +177,17 @@ var playerInfo = {
     refillHealth: function() {
         if (this.money >= 7) {
             this.health += 20;
-            this.money -= 7;
-            window.alert(this.name + "'s health refilled by 20 for 7 dollars!");
+            this.money -= 2;
+            window.alert(this.name + "'s health refilled by 20 for 2 dollars!");
         }else {
             window.alert("You don't have enough money!");
         }
     }, 
     upgradeAttack: function() {
         if (this.money >= 7) {
-            this.attack += 6;
-            this.money -= 7;
-            window.alert(this.name + "'s attack was increased by 6 for 7 dollars!");
+            this.attack += 20;
+            this.money -= 2;
+            window.alert(this.name + "'s attack was increased by 20 for 2 dollars!");
         }else {
             window.alert("You don't have enough money!");
         }
