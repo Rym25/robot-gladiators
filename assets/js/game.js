@@ -51,7 +51,6 @@ var fight = function (enemy) {
 var startGame = function() {
     // reset player stats
     playerInfo.reset();
-    debugger;
     for (var i = 0; i < enemyInfo.length; i++) {
         // Welcome Players and Display the Round Number
         if (playerInfo.health > 0) {
@@ -132,10 +131,16 @@ var randomNumber = function (minX, maxX) {
     return value;
 };
 
+var getPlayerName = function () {
+    var name = "";
+    while (name === "" || name === "null") {
+        name = window.prompt ("What is your robot's name?");
+    }
+}
 // -----------------------------------------------
 // Initialize Player Bot as an object
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
