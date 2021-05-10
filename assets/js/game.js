@@ -1,39 +1,46 @@
 var fight = function (enemy) {
+    var isPlayerTurn = true;
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false;
+      }
     while (playerInfo.health > 0 && enemy.health > 0) {
-        if(fightOrSkip()) {
-            break;
+        if (isPlayerTurn) {
+            if (fightOrSkip()) {
+                break;
+            }
+            // Generate random damage value based on player's attack power.
+            var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+            // Subtract value of damage from enemy.health and update enemy Health
+            enemy.health = Math.max(0, enemy.health - damage);
+            // Log a resulting message to the console to check the health
+            console.log(playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining.");
+            // check enemy's health
+            if (enemy.health <= 0) {
+                window.alert(enemy.name + " was destroyed!");
+                break;
+            }
+            else {
+                window.alert(enemy.name + " still has " + enemy.health + " health left.");
+            }
+        } else {
+            // Generate damage based on the enemy's attack value
+            var damage = randomNumber(enemy.attack - 3, enemy.attack);
+            // Subtract damage from playerInfo.health and update playerInfo.health
+            playerInfo.health = Math.max(0, playerInfo.health - damage);
+            // Log a resulting message to the console
+            console.log(enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining.");
+            // Check players health
+            if (playerInfo.health <= 0) {
+                window.alert(playerInfo.name + " was destroyed!");
+                break;
+            }
+            else {
+                window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
+            }
         }
-        // Generate random damage value based on player's attack power.
-        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-        // Subtract value of damage from enemy.health and update enemy Health
-        enemy.health = Math.max(0, enemy.health - damage);
-        // Log a resulting message to the console to check the health
-        console.log(playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining.");
-        // check enemy's health
-        if (enemy.health <= 0) {
-            window.alert(enemy.name + " was destroyed!");
-            break;
-        }
-        else {
-            window.alert(enemy.name + " still has " + enemy.health + " health left.");
-        }
-        // Generate damage based on the enemy's attack value
-        var damage = randomNumber(enemy.attack - 3, enemy.attack);
-        // Subtract damage from playerInfo.health and update playerInfo.health
-        playerInfo.health = Math.max(0, playerInfo.health - damage);
-        // Log a resulting message to the console
-        console.log(enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining.");
-        // Check players health
-        if (playerInfo.health <= 0) {
-            window.alert(playerInfo.name + " was destroyed!");
-            break;
-        }
-        else {
-            window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
-        }
+        isPlayerTurn = !isPlayerTurn;
     }
 };
-
 // function to start a new game
 var startGame = function() {
     // reset player stats
